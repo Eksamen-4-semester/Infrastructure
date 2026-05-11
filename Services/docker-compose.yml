@@ -17,6 +17,16 @@ services:
     environment:
       - AUTHSERVICE_URL=http://nginx:4000/authservices/
       - VAULT_URL=https://vault:8201/
+  
+  membership-service:
+    image: mortenstaunstrup/membershipservice-image:latest
+    expose:
+      - "8080"
+    networks:
+      - fitlife
+    environment:
+      - AUTHSERVICE_URL=http://nginx:4000/authservices/
+      - VAULT_URL=https://vault:8201/
 
   nginx:
     image: nginx:latest
@@ -25,6 +35,7 @@ services:
     depends_on:
       - auth-service
       - user-service
+      - membership-service
     ports:
       - "4000:4000"
     networks:
