@@ -28,6 +28,24 @@ services:
       - AUTHSERVICE_URL=http://nginx:4000/authservices/
       - VAULT_URL=https://vault:8201/
 
+  session-service:
+    image: umutnaz/sessionservice-image:latest
+    expose:
+      - "8080"
+    networks:
+      - fitlife
+    environment:
+      - AUTHSERVICE_URL=http://nginx:4000/authservices/
+      - VAULT_URL=https://vault:8201/
+  frontend:
+    image: umutnaz/frontend-image:latest
+    expose:
+      - "8080"
+    networks:
+      - fitlife
+    environment:
+      - AUTHSERVICE_URL=http://nginx:4000/authservices/
+      - VAULT_URL=https://vault:8201/
   nginx:
     image: nginx:latest
     volumes:
@@ -36,6 +54,7 @@ services:
       - auth-service
       - user-service
       - membership-service
+      - session-service
       - frontend
     ports:
       - "4000:4000"
