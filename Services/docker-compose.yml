@@ -37,6 +37,18 @@ services:
     environment:
       - AUTHSERVICE_URL=http://nginx:4000/authservices/
       - VAULT_URL=https://vault:8201/
+
+  analytics-service:
+    image: mortenstaunstrup/analyticsservice-image:latest
+    expose:
+      - "8080"
+    networks:
+      - fitlife
+    environment:
+      - AUTHSERVICE_URL=http://nginx:4000/authservices/
+      - VAULT_URL=https://vault:8201/
+
+
   frontend:
     image: mortenstaunstrup/frontend-image:latest
     expose:
@@ -61,6 +73,7 @@ services:
       - user-service
       - membership-service
       - session-service
+      - analytics-service
       - frontend
     ports:
       - "4000:4000"
